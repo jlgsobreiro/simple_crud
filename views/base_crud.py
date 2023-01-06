@@ -1,25 +1,13 @@
-import ft as ft
 from flask import render_template, request, flash, redirect, url_for
-from flask.views import View, MethodView
 from flask_mongoengine.wtf import model_form
 from flask_wtf import FlaskForm
 from mongoengine import Document
 import wtforms.fields as wtf_fields
 from wtforms.validators import DataRequired
+from forms.Forms import UserForm
 
 from repository.base_mongo import BaseMongo
 
-
-class MetaForm(FlaskForm):
-    def __init__(self, model: Document, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        fields = [(x, model._fields[x]) for x in model._fields if x != 'id']
-        for field_name, field_type in fields:
-            wtforms_field = getattr(wtf_fields, str(field_type.__class__.__name__))
-            field_instance = wtforms_field(label=field_name, validators=[DataRequired()], value='')
-            print(field_instance.__dict__)
-            setattr(self, field_name, field_instance)
-        self.populate_obj(model)
 
 
 
@@ -29,91 +17,6 @@ class SimpleCRUD:
     title = ''
     form = None
     table = None
-
-    # def dispatch_request(self):
-    #     delete_url = f'delete_view'
-    #     edit_url = f'edit_view'
-    #     _id = request.form.get('id', '')
-    #     print(_id)
-    #     print(delete_url)
-    #     print(edit_url)
-    #     print(self.links_nav_bar)
-    #     self.table = self.Meta.meta().get_all_to_dict_list()
-    #     print(self.table)
-    #     try:
-    #         return render_template('crud.html',
-    #                                title=self.title,
-    #                                links_nav_bar=self.links_nav_bar,
-    #                                form=self.form,
-    #                                table=self.table,
-    #                                permissions=self.permissoes,
-    #                                delete_url=delete_url,
-    #                                edit_url=edit_url,
-    #                                id=_id)
-    #     except Exception as e:
-    #         print('Erro: ', e)
-    #         return render_template('not_found.html')
-
-    def head(self):
-        print('teste head')
-        delete_url = f'delete_view'
-        edit_url = f'edit_view'
-        _id = request.form.get('id', '')
-        print(_id)
-        print(delete_url)
-        print(edit_url)
-        print(self.links_nav_bar)
-        self.table = self.Meta.meta().get_all_to_dict_list()
-        print(self.table)
-        return render_template('crud.html',
-                               title=self.title,
-                               links_nav_bar=self.links_nav_bar,
-                               form=self.form,
-                               table=self.table,
-                               permissions=self.permissoes,
-                               delete_url=delete_url,
-                               edit_url=edit_url,
-                               id=_id)
-
-    def get(self):
-        print('teste get')
-        delete_url = f'delete'
-        edit_url = f'edit_view'
-        _id = request.form.get('id', '')
-        print(_id)
-        print(delete_url)
-        print(edit_url)
-        print(self.links_nav_bar)
-        self.table = self.Meta.meta().get_all_to_dict_list()
-        print(self.table)
-        try:
-            return render_template('crud.html',
-                                   title=self.title,
-                                   links_nav_bar=self.links_nav_bar,
-                                   form=self.form,
-                                   table=self.table,
-                                   permissions=self.permissoes,
-                                   delete_url=delete_url,
-                                   edit_url=edit_url,
-                                   id=_id)
-        except Exception as e:
-            print('Erro: ', e)
-            return render_template('not_found.html')
-
-    def post(self):
-        pass
-
-    def put(self):
-        pass
-
-    def delete(self, id_item):
-        pass
-
-    @classmethod
-    def get_repository(cls):
-        base_repository = BaseMongo
-        base_repository.meta = cls.Meta.meta
-        return base_repository
 
     @classmethod
     def table_view(cls):
@@ -153,12 +56,9 @@ class SimpleCRUD:
         print(id_item)
         return cls.table_view()
 
-    def delete(self, id_item=None):
-        print(id_item)
-
     @classmethod
     def create_view(cls):
-        form = MetaForm(cls.Meta.meta())
+        form = UserForm(cls.Meta.meta())
         # form = model_form(cls.Meta.meta())
 
         return render_template("crud.html", title=cls.title, links_nav_bar=cls.links_nav_bar, form=form)
@@ -178,3 +78,14 @@ class SimpleCRUD:
     @classmethod
     def url_rule_create(cls):
         return f'/{cls.__name__.lower()}/create', cls.create_view
+
+    @classmethod
+    def add_url_rule(cls, app):
+        table_view_endpoint, table_view = cls.url_rule_table()
+        edit_view_endpoint, edit_view = cls.url_rule_edit()
+        create_view_endpoint, create_view = cls.url_rule_create()
+        delete_view_endpoint, delete_view = cls.url_rule_delete()
+        app.add_url_rule(table_view_endpoint, endpoint=table_view_endpoint, view_func=table_view, methods=['POST', 'GET', 'PUT', 'DELETE'])
+        app.add_url_rule(edit_view_endpoint, endpoint=edit_view_endpoint, view_func=edit_view, methods=['POST', 'GET', 'PUT', 'DELETE'])
+        app.add_url_rule(create_view_endpoint, endpoint=create_view_endpoint, view_func=create_view, methods=['POST', 'GET', 'PUT', 'DELETE'])
+        app.add_url_rule(delete_view_endpoint, endpoint=delete_view_endpoint, view_func=delete_view, methods=['POST', 'GET', 'PUT', 'DELETE'])
