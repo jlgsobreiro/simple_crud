@@ -9,5 +9,3 @@ class ProdutoView(SimpleCRUD):
         repo = RepositorioProdutos
 
     title = 'Produtos'
-
-

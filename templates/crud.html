@@ -3,9 +3,10 @@
 {% block content %}
     {% if form %}
         {{ render_form(form) }}
+    {% else %}
+        <a role="button" class="btn btn-primary" href={{ "/"+cls_endpoint+"/create" }}>Criar</a>
     {% endif %}
     {% if table %}
-        <a role="button" class="btn btn-primary" href={{ "/"+cls_endpoint+"/create" }}>Criar</a>
         {{ render_new_table(table,permissions, cls_endpoint) }}
     {% endif %}
 {% endblock %}

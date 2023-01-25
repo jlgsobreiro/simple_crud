@@ -19,6 +19,9 @@ class Usuario(Document, BaseModel):
     def instance_reference(self):
         return Usuario
 
+    def format_self(self):
+        pass
+
     def is_authenticated(self):
         return True
 

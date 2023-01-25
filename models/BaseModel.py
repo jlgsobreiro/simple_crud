@@ -6,6 +6,9 @@ class BaseModel:
     def instance_reference(self):
         raise Exception('Implementar função')
 
+    def format_self(self):
+        raise Exception('Implementar função')
+
     def to_dict(self):
         to_dict = {}
         for value in self:

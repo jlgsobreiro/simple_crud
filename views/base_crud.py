@@ -1,14 +1,8 @@
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash
 from flask_mongoengine.wtf import model_form
 from flask_wtf import FlaskForm
-from mongoengine import Document
-import wtforms.fields as wtf_fields
-from wtforms.validators import DataRequired
-from forms.Forms import UserForm
 
-from repository.base_mongo import BaseMongo
-
-
+import forms.Forms as forms
 
 
 class SimpleCRUD:
@@ -41,11 +35,14 @@ class SimpleCRUD:
     @classmethod
     def edit_view(cls, id_item=None):
         edit_data = cls.Meta.repo().find_one(id=id_item)
-        edit_form = model_form(edit_data)
-        form = edit_form(request.form)
+        form = cls.make_crud_form(edit_data.to_dict())
+        # edit_form = model_form(edit_data)
+        # form = edit_form(request.form)
         print(id_item)
         if request.method == "PUT":
-            edit_form.populate_obj(edit_data)
+            edit_data.from_dict_to_self(request.form)
+            edit_data.format_self()
+            # edit_data.populate_obj(edit_data)
             edit_data.save()
         return render_template("edit.html", title=cls.title, links_nav_bar=cls.links_nav_bar, form=form)
 
@@ -58,10 +55,37 @@ class SimpleCRUD:
 
     @classmethod
     def create_view(cls):
-        form = UserForm(cls.Meta.meta())
+        form = cls.make_crud_form()
         # form = model_form(cls.Meta.meta())
-
+        if request.method == "POST":
+            # form.populate_obj(request.form)
+            # form = cls.make_crud_form(request.form)
+            print(request.form)
+            # print(form.populated_obj())
+            crud_obj = cls.Meta.meta()
+            crud_obj.from_dict_to_self(request.form)
+            crud_obj.format_self()
+            # form.populate_obj(crud_obj)
+            crud_obj.save()
         return render_template("crud.html", title=cls.title, links_nav_bar=cls.links_nav_bar, form=form)
+
+    @classmethod
+    def make_crud_form(cls, crud_data=None) -> FlaskForm:
+        print(crud_data)
+        crud_form = cls.Meta.meta.__name__+"Form"
+        form = getattr(forms, crud_form)(cls.Meta.meta())
+        if crud_data:
+            crud_obj = cls.Meta.meta()
+            crud_obj.from_dict_to_self(request.form)
+            form = getattr(forms, crud_form)(crud_obj)
+            # form = getattr(forms, crud_form)(crud_data)
+            # cls.populate_crud_form(form, crud_data)
+        return form
+
+    @classmethod
+    def populate_crud_form(cls, crud_form, crud_data):
+        for key in crud_data.keys():
+            setattr(crud_form, key, crud_data[key])
 
     @classmethod
     def url_rule_table(cls):

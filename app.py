@@ -32,6 +32,8 @@ links_nav_bar = [
     ('/produtoview', 'Produtos')
 ]
 
+app.__setattr__("links_nav_bar", links_nav_bar)
+
 bootstrap = Bootstrap5()
 bootstrap.init_app(app)
 login_manager = LoginManager()
@@ -42,10 +44,9 @@ user_view.links_nav_bar = links_nav_bar
 user_view.add_url_rule(app)
 
 produto_view = ProdutoView
+produto_view.links_nav_bar = links_nav_bar
 produto_view.add_url_rule(app)
 
-for rule in app.url_map.iter_rules():
-    print(rule.endpoint)
 
 @login_manager.user_loader
 def load_user(user_id):

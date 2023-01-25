@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import Field
-from wtforms.fields import StringField, PasswordField, EmailField, SubmitField, BooleanField
-from mongoengine.fields import StringField as MongoStringField, EmailField as MongoEmailField
+from wtforms.fields import StringField, PasswordField, EmailField, SubmitField, BooleanField, FloatField, IntegerField
+from mongoengine.fields import StringField as MongoStringField, EmailField as MongoEmailField, BooleanField as MongoBooleanField, FloatField as MongoFloatField, IntField as MongoIntegerField
 from wtforms.validators import DataRequired
 
 from models.Produto import Produto
@@ -31,12 +31,13 @@ def add_form_fields_by_model(model_cls):
     def add_form_fields(form_cls):
         mongoengine_wtform_fields = {
             MongoEmailField: EmailField,
-            MongoStringField: StringField
+            MongoStringField: StringField,
+            MongoFloatField: FloatField,
+            MongoBooleanField: BooleanField,
+            MongoIntegerField: IntegerField
         }
 
         for field_name, field_type in model_cls._fields.items():
-            print(field_type)
-            print(mongoengine_wtform_fields.keys())
             if field_type.__class__ not in mongoengine_wtform_fields:
                 continue
 
@@ -50,10 +51,12 @@ def add_form_fields_by_model(model_cls):
 
 
 @add_form_fields_by_model(Usuario)
-class UserForm(FlaskForm):
-    pass
+class UsuarioForm(FlaskForm):
+    def populated_obj(self):
+        return self.populate_obj(Usuario)
 
 
 @add_form_fields_by_model(Produto)
 class ProdutoForm(FlaskForm):
-    pass
+    def populated_obj(self):
+        return self.populate_obj(Produto)
