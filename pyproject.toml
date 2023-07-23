@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "simple-crud"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+#packages = [{include = "simple_crud"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pip="23.0.1"
+Flask-Cors="3.0.10"
+Flask="2.2.3"
+setuptools="67.4.0"
+bootstrap-flask="2.0.2"
+flask_mongoengine="1.0.0"
+flask_login="0.6.2"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
