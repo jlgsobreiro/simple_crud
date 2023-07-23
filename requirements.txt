@@ -1,7 +1,7 @@
-pip==23.0.1
-Flask-Cors==3.0.10
+pip==23.2.1
+Flask-Cors==4.0.0
 Flask==2.2.3
-setuptools==67.4.0
+setuptools==68.0.0
 bootstrap-flask
 flask_mongoengine
 flask_login
