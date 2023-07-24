@@ -96,6 +96,7 @@ class SimpleCRUD:
 
     @classmethod
     def add_url_rule(cls, app):
+        cls.links_nav_bar = app.links_nav_bar
         table_view_endpoint, table_view = cls.url_rule_table()
         edit_view_endpoint, edit_view = cls.url_rule_edit()
         create_view_endpoint, create_view = cls.url_rule_create()

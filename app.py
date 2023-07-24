@@ -8,54 +8,19 @@ from flask_mongoengine import MongoEngine
 from forms.Forms import LoginForm, RegisterForm
 from models.Usuario import Usuario
 from repository.usuario import RepositorioUsuarios
-from views.account import AccountView
-from views.card import CardView
-from views.produto import ProdutoView
-from views.transfer_history import TransferHistoryView
-from views.user import UserView
+
+from views.setup import setup_crud_views
 
 app = Flask(__name__)
 app.config.from_pyfile("instance/config.py")
 db = MongoEngine(app)
 
-
-links_nav_bar = [
-    ('register', 'Registrar'),
-    ('main', 'Main'),
-    ('home', 'Home'),
-    ('/userview', 'Usuarios'),
-    ('/produtoview', 'Produtos'),
-    ('/accountview', 'Account'),
-    ('/transferhistoryview', 'Transfer History'),
-    ('/cardview', 'Card'),
-]
-
-app.__setattr__("links_nav_bar", links_nav_bar)
+setup_crud_views(app)
 
 bootstrap = Bootstrap5()
 bootstrap.init_app(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-
-user_view = UserView
-user_view.links_nav_bar = links_nav_bar
-user_view.add_url_rule(app)
-
-produto_view = ProdutoView
-produto_view.links_nav_bar = links_nav_bar
-produto_view.add_url_rule(app)
-
-account_view = AccountView
-account_view.links_nav_bar = links_nav_bar
-account_view.add_url_rule(app)
-
-trasnfer_history_view = TransferHistoryView
-trasnfer_history_view.links_nav_bar = links_nav_bar
-trasnfer_history_view.add_url_rule(app)
-
-card_view = CardView
-card_view.links_nav_bar = links_nav_bar
-card_view.add_url_rule(app)
 
 
 @login_manager.user_loader
@@ -100,7 +65,7 @@ def register():
 
 @app.route('/main', methods=["POST", "GET"])
 def main():
-    return render_template('main.html', links_nav_bar=links_nav_bar)
+    return render_template('main.html', links_nav_bar=app.links_nav_bar)
 
 
 if __name__ == '__main__':
