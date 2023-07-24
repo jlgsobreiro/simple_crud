@@ -78,6 +78,6 @@ class TransferHistoryForm(FlaskForm):
 
 
 @add_form_fields_by_model(Card)
-class TransferHistoryForm(FlaskForm):
+class CardForm(FlaskForm):
     def populated_obj(self):
         return self.populate_obj(Card)

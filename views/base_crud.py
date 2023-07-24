@@ -35,17 +35,15 @@ class SimpleCRUD:
     @classmethod
     def edit_view(cls, id_item=None):
         edit_data = cls.Meta.repo().find_one(id=id_item)
+        edit_data['id'] = id_item
         form = cls.make_crud_form(edit_data.to_dict())
-        # edit_form = model_form(edit_data)
-        # form = edit_form(request.form)
         print(id_item)
-        if request.method == "PUT":
+        if request.method == "POST":
             edit_data.from_dict_to_self(request.form)
             edit_data.format_self()
-            # edit_data.populate_obj(edit_data)
             edit_data.save()
+            return cls.table_view()
         return render_template("edit.html", title=cls.title, links_nav_bar=cls.links_nav_bar, form=form)
-
     @classmethod
     def delete_view(cls, id_item=None):
         flash('apagando')
@@ -56,17 +54,13 @@ class SimpleCRUD:
     @classmethod
     def create_view(cls):
         form = cls.make_crud_form()
-        # form = model_form(cls.Meta.meta())
         if request.method == "POST":
-            # form.populate_obj(request.form)
-            # form = cls.make_crud_form(request.form)
             print(request.form)
-            # print(form.populated_obj())
             crud_obj = cls.Meta.meta()
             crud_obj.from_dict_to_self(request.form)
             crud_obj.format_self()
-            # form.populate_obj(crud_obj)
             crud_obj.save()
+            return cls.table_view()
         return render_template("crud.html", title=cls.title, links_nav_bar=cls.links_nav_bar, form=form)
 
     @classmethod
@@ -75,11 +69,8 @@ class SimpleCRUD:
         crud_form = cls.Meta.meta.__name__+"Form"
         form = getattr(forms, crud_form)(cls.Meta.meta())
         if crud_data:
-            crud_obj = cls.Meta.meta()
-            crud_obj.from_dict_to_self(request.form)
-            form = getattr(forms, crud_form)(crud_obj)
-            # form = getattr(forms, crud_form)(crud_data)
-            # cls.populate_crud_form(form, crud_data)
+            for data in crud_data:
+                getattr(form, data).data = crud_data[data]
         return form
 
     @classmethod
