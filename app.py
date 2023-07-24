@@ -2,12 +2,8 @@ from datetime import timedelta
 
 from flask import Flask, request, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
-from flask_login import LoginManager, login_user, current_user, AnonymousUserMixin
-from flask_mongoengine import MongoEngine, MongoEngineSessionInterface
-from flask_mongoengine.wtf import model_form
-from flask_mongoengine.wtf.models import ModelForm
-from flask_wtf import FlaskForm
-from wtforms.fields import *
+from flask_login import LoginManager, login_user, current_user
+from flask_mongoengine import MongoEngine
 
 from forms.Forms import LoginForm, RegisterForm
 from models.Usuario import Usuario
@@ -27,7 +23,6 @@ links_nav_bar = [
     ('register', 'Registrar'),
     ('main', 'Main'),
     ('home', 'Home'),
-    # (user_table_view_endpoint.replace('/', ''), 'Usuarios')
     ('/userview', 'Usuarios'),
     ('/produtoview', 'Produtos'),
     ('/accountview', 'Account'),
@@ -106,53 +101,6 @@ def register():
 @app.route('/main', methods=["POST", "GET"])
 def main():
     return render_template('main.html', links_nav_bar=links_nav_bar)
-
-
-# @app.route('/usuarios', methods=["POST", "GET"])
-# def usuarios():
-#     usuarios_data = RepositorioUsuarios().find()
-#     permissoes = ['create', 'edit', 'delete']
-#     print(usuarios_data)
-#     return render_template("table.html", title='Usuarios', links_nav_bar=links_nav_bar, data=usuarios_data, permissions=permissoes)
-#
-#
-# @app.route('/usuarios/editar/<id_item>', methods=["POST", "GET"])
-# def usuarios_editar(id_item):
-#     user = RepositorioUsuarios().find_one(id=id_item)
-#     edit_form = model_form(instance=user)
-#     form = edit_form(request.form)
-#     if request.method == "POST":
-#         edit_form.populate_obj(user)
-#         user.save()
-#     return render_template("edit.html", title='Usuarios', links_nav_bar=links_nav_bar, form=form)
-#
-#
-# @app.route('/usuarios/apagar/<id_item>', methods=["POST", "GET"])
-# def usuarios_apagar(id_item):
-#     flash('apagando')
-#     RepositorioUsuarios().find_one(id=id_item).delete()
-#     print(id_item)
-#     return redirect(url_for('usuarios'))
-#
-#
-# @app.route('/usuarios/criar', methods=["POST", "GET"])
-# def usuarios_criar():
-#     return render_template("crud.html", title='Usuarios', links_nav_bar=links_nav_bar)
-
-
-@app.route('/produtos', methods=["POST", "GET"])
-def produtos():
-    return render_template("crud.html", title='produtos', links_nav_bar=links_nav_bar)
-
-
-@app.route('/contas', methods=["POST", "GET"])
-def contas():
-    return render_template("crud.html", title='contas', links_nav_bar=links_nav_bar)
-
-
-@app.route('/inventario', methods=["POST", "GET"])
-def inventario():
-    return render_template("crud.html", title='Inventário', links_nav_bar=links_nav_bar)
 
 
 if __name__ == '__main__':
