@@ -43,3 +43,12 @@ add_model_to_forms:
 	@sed -i 's/##Reserved_for_import/##Reserved_for_import\nfrom models.$(MODEL_NAME) import $(MODEL_NAME)/g' ./forms/Forms.py
 
 	@sed -i 's/##Reserved_for_add_form_fields_by_model/\n\n@add_form_fields_by_model($(MODEL_NAME))\nclass $(MODEL_NAME)Form(FlaskForm):\n    def populated_obj(self):\n        return self.populate_obj($(MODEL_NAME))\n##Reserved_for_add_form_fields_by_model/g' ./forms/Forms.py
+
+poetry_lock:
+	docker exec simple_crud-simple_crud-1 poetry lock
+
+poetry_install:
+	docker exec simple_crud-simple_crud-1 poetry install
+
+poetry_update:
+	docker exec simple_crud-simple_crud-1 poetry update

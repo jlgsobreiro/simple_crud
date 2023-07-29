@@ -1,16 +1,30 @@
 Para construir o servidor no docker, execute o seguinte comando:
+
 ```make build```
 
 Para rodar o servidor no docker, execute o seguinte comando:
+
 ```make start```
 
 Para parar o servidor no docker, execute o seguinte comando:
+
 ```make stop```
 
 É possivel rodar o servidor sem o docker, para isso, execute o seguinte comando:
+
 ```flask run```
 
 Como utilizar o SimpleCRUD:
+
+Adicionando um novo modelo:
+
+```make add_model```
+
+Haverá uma pergunta para o nome do modelo, digite o nome do modelo no singular, por exemplo: Usuario
+
+Este comando irá criar todos os arquivos e registros necessarios para que o modelo seja utilizado no SimpleCRUD
+
+Ou se quiser criar manualmente, siga os seguintes passos
 
 Crie um modelo na pasta models, seguindo o exemplo do arquivo User.py
 ```
