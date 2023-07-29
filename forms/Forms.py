@@ -1,9 +1,10 @@
+##Reserved_for_import
 from models.Card import Card
 from models.Produto import Produto
 from models.TransferHistory import TransferHistory
 from models.Usuario import Usuario
 from models.Account import Account
-from models.ModelTemplate import ExempleModel
+from models.ModelTemplate import ModelTemplate
 
 from flask_wtf import FlaskForm
 from wtforms import Field
@@ -104,7 +105,8 @@ class CardForm(FlaskForm):
         return self.populate_obj(Card)
 
 
-@add_form_fields_by_model(ExempleModel)
+@add_form_fields_by_model(ModelTemplate)
 class ExempleModelForm(FlaskForm):
     def populated_obj(self):
-        return self.populate_obj(ExempleModel)
+        return self.populate_obj(ModelTemplate)
+##Reserved_for_add_form_fields_by_model

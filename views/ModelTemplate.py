@@ -1,9 +1,9 @@
 from models.ModelTemplate import ModelTemplate
-from repository.ModelTemplateRepository import RepositoryModelTemplate
+from repository.ModelTemplate import RepositoryModelTemplate
 from views.base_crud import SimpleCRUD
 
 
-class ExempleModelView(SimpleCRUD):
+class ModelTemplateView(SimpleCRUD):
     class Meta:
         meta = ModelTemplate
         repo = RepositoryModelTemplate
