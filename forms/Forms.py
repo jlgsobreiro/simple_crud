@@ -106,7 +106,7 @@ class CardForm(FlaskForm):
 
 
 @add_form_fields_by_model(ModelTemplate)
-class ExempleModelForm(FlaskForm):
+class ModelTemplateForm(FlaskForm):
     def populated_obj(self):
         return self.populate_obj(ModelTemplate)
 ##Reserved_for_add_form_fields_by_model
