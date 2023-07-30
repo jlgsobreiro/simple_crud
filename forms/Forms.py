@@ -1,9 +1,5 @@
 ##Reserved_for_import
-from models.Card import Card
-from models.Produto import Produto
-from models.TransferHistory import TransferHistory
 from models.Usuario import Usuario
-from models.Account import Account
 from models.ModelTemplate import ModelTemplate
 
 from flask_wtf import FlaskForm
@@ -79,30 +75,6 @@ def add_form_fields_by_model(model_cls):
 class UsuarioForm(FlaskForm):
     def populated_obj(self):
         return self.populate_obj(Usuario)
-
-
-@add_form_fields_by_model(Produto)
-class ProdutoForm(FlaskForm):
-    def populated_obj(self):
-        return self.populate_obj(Produto)
-
-
-@add_form_fields_by_model(Account)
-class AccountForm(FlaskForm):
-    def populated_obj(self):
-        return self.populate_obj(Account)
-
-
-@add_form_fields_by_model(TransferHistory)
-class TransferHistoryForm(FlaskForm):
-    def populated_obj(self):
-        return self.populate_obj(TransferHistory)
-
-
-@add_form_fields_by_model(Card)
-class CardForm(FlaskForm):
-    def populated_obj(self):
-        return self.populate_obj(Card)
 
 
 @add_form_fields_by_model(ModelTemplate)
