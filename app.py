@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 
 from flask import Flask, request, render_template, redirect, url_for, flash
@@ -5,6 +6,7 @@ from flask_bootstrap import Bootstrap5
 from flask_login import LoginManager, login_user, current_user
 from flask_mongoengine import MongoEngine
 
+from fixtures import run_fixtures
 from forms.Forms import LoginForm, RegisterForm
 from models.Usuario import Usuario
 from repository.usuario import RepositorioUsuarios
@@ -69,4 +71,6 @@ def main():
 
 
 if __name__ == '__main__':
+    # if os.getenv('ENVIRONMENT') == 'development':
+    run_fixtures()
     app.run()
