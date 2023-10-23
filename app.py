@@ -57,7 +57,7 @@ def register():
         usuario = Usuario()
         register_form.populate_obj(usuario)
         try:
-            usuario.save()
+            usuario.persist_data()
             flash('parece que foi')
             return redirect(url_for('home'))
         except Exception as e:

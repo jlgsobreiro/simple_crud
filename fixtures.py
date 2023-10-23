@@ -11,4 +11,4 @@ def run_fixtures():
         usuario.senha = '123'
         usuario.sobrenome = '123'
         usuario.telefone = '123'
-        usuario.save()
+        usuario.persist_data()

@@ -9,6 +9,9 @@ class BaseModel:
     def format_self(self):
         raise Exception('Implementar função')
 
+    def persist_data(self):
+        raise Exception('Implementar função')
+
     def to_dict(self):
         to_dict = {}
         for value in self:
@@ -21,7 +24,7 @@ class BaseModel:
 
     def save_object_from_dict(self, sql_dict):
             self.from_dict_to_self(sql_dict)
-            self.save()
+            self.persist_data()
 
     def from_dict_to_self(self, sql_dict: dict):
         for key in sql_dict.keys():

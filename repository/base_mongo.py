@@ -21,7 +21,7 @@ class BaseMongo:
         for k, v in kwargs.items():
             setattr(instance, k, v)
 
-        instance.save()
+        instance.persist_data()
         return instance
     @classmethod
     def get_all_as_dict_list(cls):

@@ -31,5 +31,8 @@ class ModelTemplate(Document, BaseModel):
     def is_anonymous(self):
         return False
 
+    def persist_data(self):
+        self.save()
+
     def get_id(self):
         return ObjectId(self.id).__str__()

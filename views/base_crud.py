@@ -38,12 +38,13 @@ class SimpleCRUD:
         edit_data['id'] = id_item
         form = cls.make_crud_form(edit_data.to_dict())
         print(id_item)
-        if request.method == "POST":
+        if request.method in ["POST", "PUT"]:
             edit_data.from_dict_to_self(request.form)
             edit_data.format_self()
-            edit_data.save()
+            edit_data.persist_data()
             return cls.table_view()
         return render_template("edit.html", title=cls.title, links_nav_bar=cls.links_nav_bar, form=form)
+
     @classmethod
     def delete_view(cls, id_item=None):
         flash('apagando')
@@ -59,7 +60,7 @@ class SimpleCRUD:
             crud_obj = cls.Meta.meta()
             crud_obj.from_dict_to_self(request.form)
             crud_obj.format_self()
-            crud_obj.save()
+            crud_obj.persist_data()
             return cls.table_view()
         return render_template("crud.html", title=cls.title, links_nav_bar=cls.links_nav_bar, form=form)
 
