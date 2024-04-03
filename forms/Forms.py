@@ -1,4 +1,5 @@
 ##Reserved_for_import
+from models.sql_teste import sql_teste
 from models.Usuario import Usuario
 from models.ModelTemplate import ModelTemplate
 
@@ -81,4 +82,10 @@ class UsuarioForm(FlaskForm):
 class ModelTemplateForm(FlaskForm):
     def populated_obj(self):
         return self.populate_obj(ModelTemplate)
+
+
+@add_form_fields_by_model(sql_teste)
+class sql_testeForm(FlaskForm):
+    def populated_obj(self):
+        return self.populate_obj(sql_teste)
 ##Reserved_for_add_form_fields_by_model

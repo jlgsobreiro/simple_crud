@@ -1,4 +1,5 @@
 ##Reserved_for_import
+from views.sql_teste import sql_testeView
 from views.user import UserView
 from views.ModelTemplate import ModelTemplateView
 
@@ -8,6 +9,7 @@ links_nav_bar = [
     ('home', 'Home'),
     ('/userview', 'Usuarios'),
     ('/modeltemplateview', 'ModelTemplate'),
+    ('/sql_testeview', 'sql_teste'),
 ##Reserved_for_links_nav_bar
 ]
 
@@ -17,4 +19,5 @@ def setup_crud_views(app):
 
     UserView.add_url_rule(app)
     ModelTemplateView.add_url_rule(app)
+    sql_testeView.add_url_rule(app)
 ##Reserved_for_add_url_rule
