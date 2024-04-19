@@ -1,4 +1,4 @@
-FROM python:3-alpine AS crud
+FROM python:3.11-alpine AS crud
 
 COPY ./ ./app/
 WORKDIR /app

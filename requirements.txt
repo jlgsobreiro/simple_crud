@@ -1,11 +1,13 @@
 pip==23.2.1
-Flask-Cors==4.0.0
-Flask==2.2.3
-setuptools==68.0.0
-bootstrap-flask
-flask_mongoengine
-flask_login
-
 WTForms~=3.1.2
 mongoengine~=0.28.2
 pymongo~=4.6.3
+Flask-Cors==4.0.0
+Flask==2.2.5
+setuptools==69.5.1
+bootstrap-flask==2.4.0
+flask_mongoengine==1.0.0
+flask_login==0.6.3
+flask-mysql==1.5.2
+flask-sqlalchemy == 3.1.1
+sqlalchemy == 2.0.29

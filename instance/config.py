@@ -7,3 +7,9 @@ MONGODB_SETTINGS = {
     'username': 'root',
     'password': 'senha'
 }
+MYSQL_SETTINGS = {
+    'db': 'tcc',
+    'host': 'mysql',
+    'port': 3306,
+    'password': 'senha'
+}

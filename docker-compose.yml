@@ -38,6 +38,17 @@ services:
     networks:
       - minha-rede
 
+  mysql:
+    image: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: senha
+      MYSQL_DATABASE: tcc
+    networks:
+      - minha-rede
+
 networks:
   minha-rede:
     driver: bridge
