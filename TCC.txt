@@ -1,0 +1,21 @@
+Projeto de TCC
+
+1) O que pretendo obter com o projeto?
+    Neste projeto pretendo desenvolver um sistema de cadastro entre bancos de dados diferentes, por exemplo,
+    desejo utilizar no mongodb o cadastro de vendas e no mysql o cadastro de clientes, e poder consultar esses
+    dados de forma integrada utilizando uma rest api, onde o usuário poderá consultar os dados de vendas e clientes
+    em uma unica requisição, sem a necessidade de acessar os bancos de dados separadamente.
+    Poder criar as tabelas no banco de dados, inserir, atualizar e deletar registros, e utilizar chaves estrangeiras
+    para relacionar as tabelas entre os bancos de dados, por exemplo, o cadastro de vendas terá uma chave estrangeira
+    que relaciona com o cadastro de clientes, e ao consultar as vendas, o sistema irá trazer os dados do cliente,
+    mas os dados do cliente estarão em um banco de dados diferente do banco de dados de vendas.
+
+2) Qual a justificativa para o projeto?
+    A justificativa para o projeto é a possibilidade de integrar diferentes bancos de dados, utilizando uma rest api
+    para consultar os dados de forma integrada, sem a necessidade de acessar os bancos de dados separadamente.
+    A possibilidade de criar, inserir, atualizar e deletar registros em diferentes bancos de dados, e utilizar chaves
+    estrangeiras para relacionar as tabelas entre os bancos de dados.
+
+3) O que está sendo utilizado para o desenvolvimento do projeto?
+    Para o desenvolvimento do projeto será utilizado o python, flask, mongodb e mysql.
+
