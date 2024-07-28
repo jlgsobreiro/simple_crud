@@ -128,11 +128,11 @@ def insert():
                     bool: 'BOOLEAN',
                     float: 'FLOAT'
                 }
-                print({', '.join([f"{key} {type_map.get(type(fields[key]), 'VARCHAR(255)')}" for key in fields.keys()])})
+                print({', '.join([f"{key} {type_map.get(type(fields[key]), f'VARCHAR({int(key.split("__")[-1])})' if key.split("__")[-1].isnumeric() else type_map[str])}" for key in fields.keys()])})
                 target_table_object.execute(f'''
                 CREATE TABLE IF NOT EXISTS {target_table} (
                 id INT AUTO_INCREMENT PRIMARY KEY,
-               {', '.join([f"{key} {type_map.get(type(fields[key]), 'VARCHAR(255)')}" for key in fields.keys()])}
+               {', '.join([f"{key} {type_map.get(type(fields[key]), f'VARCHAR({int(key.split("__")[-1])})' if key.split("__")[-1].isnumeric() else type_map[str])}" for key in fields.keys()])}
                 );''')
             else:
                 return "Table does not exist", 400
